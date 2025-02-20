@@ -10,7 +10,6 @@
 
 bit TMR0IF_flag = 0;
 bit INTF_flag = 0;
-bit Load_flag = 0;
 int load = 0x00;
 
 void interrupt ISR()
@@ -24,39 +23,30 @@ void interrupt ISR()
 		DATA = PORTD & 0x0F;
 
 		if(DATA == 0x00){
-			Load_flag = 1;
 			load = 0x01;
 		}
 		else if(DATA == 0x01){
-			Load_flag = 1;
 			load = 0x02;
 		}
 		else if(DATA == 0x02){
-			Load_flag = 1;
 			load = 0x03;
 		}
 		else if(DATA == 0x04){
-			Load_flag = 1;
 			load = 0x04;
 		}
 		else if(DATA == 0x05){
-			Load_flag = 1;
 			load = 0x05;
 		}
 		else if(DATA == 0x06){
-			Load_flag = 1;
 			load = 0x06;
 		}
 		else if(DATA == 0x08){
-			Load_flag = 1;
 			load = 0x07;
 		}
 		else if(DATA == 0x09){
-			Load_flag = 1;
 			load = 0x08;
 		}
 		else if(DATA == 0x0A){
-			Load_flag = 1;
 			load = 0x09;
 		}
 
@@ -87,7 +77,7 @@ void delay(int count)
 
 void main()
 {	
-	unsigned char counter = 0x01;
+	unsigned char counter = 0x00;
 
 	OPTION_REG = 0xC4;
 	
@@ -109,26 +99,21 @@ void main()
 
 	while(1)
 	{
-		if(INTF_flag == 0)
-		{
-			while(INTF_flag != 1){
-			}
-		}
-		 else if(counter == 0x09)
-        {
-            counter = 0x00;
-        }
-		else if(Load_flag == 1){
 		
+		if(counter == 0x09)
+        	{
+            		counter = 0x00;
+        	}
+		else if(INTF_flag == 0)
+		{
+			counter++;
+		}
+		else if(INTF_flag == 1){
 			counter = load;
 		}
-        else
-        {
-            counter++;
-        }
         
-        Load_flag = 0;
-        delay(98);
-        PORTC  = counter;
+	        INTF_flag = 0;
+	        delay(98);
+	        PORTC  = counter;
 	}
 }

@@ -42,8 +42,7 @@ void main(){
 	
 	unsigned char LSBcounter = 0x00;
 	unsigned char MSBcounter = 0x00;
-	unsigned char tempLSBCounter = 0x00;
-	unsigned char tempMSBCounter = 0x00;
+
 	OPTION_REG = 0xC4;
 	TRISC = 0x00;
 	TRISD = 0x00;
@@ -64,13 +63,15 @@ void main(){
 		if (INTF_flag == 0){
 			if (LSBcounter == 0x09){
 				LSBcounter = 0x00;
-				if(LSBcounter != 0x09){
+				if (MSBcounter == 0x09){
+						MSBcounter = 0x00;
+				}
+				else if(LSBcounter != 0x09){
 					MSBcounter++;
+					
 				}
 			}
-			else if (MSBcounter == 0x09){
-				MSBcounter = 0x00;
-			}
+			
 			else{
 				LSBcounter++;
 			}
@@ -83,12 +84,5 @@ void main(){
 			PORTD = MSBcounter;
 		}
 		
-		//tempLSBCounter = LSBcounter;
-		//tempMSBCounter = MSBcounter;
-
-
 	}
-
-
-
 }

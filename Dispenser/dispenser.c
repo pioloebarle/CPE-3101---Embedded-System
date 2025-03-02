@@ -12,10 +12,10 @@
 bit TMR0IF_flag = 0;
 bit INTF_flag = 0;
 
-const unsigned char menu1[] = "[1] Coke";
-const unsigned char menu2[] = "[2] Sprite";
-const unsigned char menu3[] = "[3] Royal";
-const unsigned char menu4[] = "[4] Pepsi";
+const unsigned char menu1[] = "[1] Coke Large";
+const unsigned char menu2[] = "[2] Coke Medium";
+const unsigned char menu3[] = "[3] Sprite Large";
+const unsigned char menu4[] = "[4] Sprite Medium";
 const unsigned char dispense[] = "Dispensing...";
 const unsigned char eStop[] = "Emergency Stop...";
 
@@ -121,7 +121,40 @@ void displayEStop(){
 	instCtrl(0x01);
 	instCtrl(0xC2);
 	display(eStop);
+}
 
+void fiveSec()
+{
+	for (int i = 5; i >= 1; i--){
+		instCtrl(0x9D);
+		dataCtrl(i + 0x30);
+		instCtrl(0x9E);
+		dataCtrl('s');
+		delay(122);
+			if(INTF_flag == 1){
+				displayEStop();
+				delay(244);
+				INTF_flag = 0;
+				i = 0;
+			}
+	}
+}
+
+void threeSec()
+{
+	for (int i = 3; i >= 1; i--){
+		instCtrl(0x9D);
+		dataCtrl(i + 0x30);
+		instCtrl(0x9E);
+		dataCtrl('s');
+		delay(122);
+			if(INTF_flag == 1){
+				displayEStop();
+				delay(244);
+				INTF_flag = 0;
+				i = 0;
+			}
+	}
 }
 
 void main(){
@@ -143,8 +176,6 @@ void main(){
 
 	GIE = 1; // enables all unmasked interrupt
 	
-	ADCON1 = 0x06;
-
 	int DATA;
 
 	unsigned LCD_pos = 0x80;
@@ -157,6 +188,7 @@ void main(){
 		displayMenu();
 		
 		
+		
 		while(!RD4){}
 		while(RD4){
 			DATA = PORTD & 0x0F;
@@ -164,70 +196,22 @@ void main(){
 				case 0x00:
 					
 					displayDispense();
-					for (int i = 5; i >= 1; i--){
-						instCtrl(0x9D);
-						dataCtrl(i + 0x30);
-						instCtrl(0x9E);
-						dataCtrl('s');
-						delay(122);
-							if(INTF_flag == 1){
-								displayEStop();
-								delay(244);
-								INTF_flag = 0;
-								i = 0;
-							}
-					}
+					fiveSec();
 					break;
 
 				case 0x01:
 					displayDispense();
-					for (int i = 3; i >= 1; i--){
-						instCtrl(0x9D);
-						dataCtrl(i + 0x30);
-						instCtrl(0x9E);
-						dataCtrl('s');
-						delay(122);
-							if(INTF_flag == 1){
-								displayEStop();
-								delay(244);
-								INTF_flag = 0;
-								i = 0;
-							}
-					}
+					threeSec();
 					break;
 
 				case 0x02:
 					displayDispense();
-					for (int i = 5; i >= 1; i--){
-						instCtrl(0x9D);
-						dataCtrl(i + 0x30);
-						instCtrl(0x9E);
-						dataCtrl('s');
-						delay(122);
-							if(INTF_flag == 1){
-								displayEStop();
-								delay(244);
-								INTF_flag = 0;
-								i = 0;
-							}
-					}
+					fiveSec();
 					break;
 
 				case 0x04:
 					displayDispense();
-					for (int i = 3; i >= 1; i--){
-						instCtrl(0x9D);
-						dataCtrl(i + 0x30);
-						instCtrl(0x9E);
-						dataCtrl('s');
-						delay(122);
-							if(INTF_flag == 1){
-								displayEStop();
-								delay(244);
-								INTF_flag = 0;
-								i = 0;
-							}
-					}
+					threeSec();
 					break;
 
 				default: break;

@@ -209,28 +209,28 @@ void main(){
 					speed = (int)(ONE_SEC * 0.1); 
 					break;
 				case '2': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.2);
 					break;
 				case '3': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.3);
 					break;
 				case '4': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.4);
 					break;
 				case '5': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.5);
 					break;
 				case '6': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.6);
 					break;
 				case '7': 
-					speed =(int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.7);
 					break;
 				case '8': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.8);
 					break;
 				case '9': 
-					speed = (int)(ONE_SEC * 0.1);
+					speed = (int)(ONE_SEC * 0.9);
 					break;
 				case '0': 
 					speed = ONE_SEC;

@@ -39,9 +39,10 @@ void main()
 	TX9 = 0; 			// 8-bit transmission (TXSTA reg)
 	BRGH = 1; 			// asynchronous high-speed (TXSTA reg)
 	TXEN = 1;			// transmit enable (TXSTA reg)
-	RX9 = 0;
+	
 	//Receiver
 	CREN = 1;
+	RX9 = 0;
 	
 	PEIE = 1;
 	GIE = 1;
@@ -59,13 +60,13 @@ void main()
 	PORTD = 0x00;
 	
 	
-	
+	unsigned char receivedData = 0;
 	while (1) {
 		
 		//LEDs
 		unsigned char DATA = PORTB & 0x0F;
-		PORTD = (DATA << 4);
-		
+		//PORTD = (DATA << 4);
+		PORTD = (PORTD & 0x0F) | (DATA << 4);
 		
 		//7Seg
 		if(RB4){
@@ -79,13 +80,10 @@ void main()
 				CREN = 0;
 				CREN = 1;
 			}
+			receivedData = RCREG;
 		}
 		
-			//while(!RCIF);
-			//unsigned char receiveData = RCREG;
-			PORTD = RCREG;
-			//RCIE = 1;
-		
+		PORTD = (PORTD & 0xF0) | (receivedData & 0x0F);
 		
 		
  	}       

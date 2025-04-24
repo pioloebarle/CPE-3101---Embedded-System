@@ -8,6 +8,9 @@
 #pragma config WRT = OFF
 #pragma config CP = OFF
 
+//This activity shows an Analog-to-Digital Converter
+//In which it will show the voltage in the LCD with 2 decimal places
+
 bit ADIF_flag = 0;
 unsigned int adc_result = 0;
 unsigned int whole, decimal, decimal1;

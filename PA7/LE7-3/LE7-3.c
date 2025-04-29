@@ -203,7 +203,10 @@ void main(void)
 		 temp = I2C_Receive(0); 
 		 I2C_Stop(); 
 		 delay(10); 
-		
+
+		 //T_temp = (T_temp << 8) | temp;
+		 //float t = (175.72)*((float)T_temp / 65536);
+		 
 		 T_temp = T_temp << 6; 
 		 temp = temp >> 2; 
 		 T_temp = T_temp | temp;
